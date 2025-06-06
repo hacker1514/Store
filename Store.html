@@ -1,159 +1,278 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Niranjan Creations</title>
+  <meta charset="UTF-8" />
+  <title>NIRANJAN CREATIONS</title>
   <style>
     * {
       margin: 0; padding: 0;
       box-sizing: border-box;
       font-family: 'Courier New', Courier, monospace;
+      text-transform: uppercase;
     }
     body {
-      background-color: #000;
+      background-color: black;
       color: cyan;
       height: 100vh;
       overflow: hidden;
-    }
-    #splash {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      animation: flicker 0.5s infinite alternate;
-      text-align: center;
-      flex-direction: column;
-    }
-    #splash h1 {
-      font-size: 3rem;
-      color: orange;
-      animation: zoomOut 3s forwards;
-    }
-    @keyframes flicker {
-      0% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-    @keyframes zoomOut {
-      from { font-size: 5rem; }
-      to { font-size: 2rem; }
-    }
+    }#splash, #main, #reportPage, #uploadPage {
+  display: none;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
-    #main {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-      height: 100vh;
-      padding: 10px;
-      background: #000;
-      color: green;
-    }
-    header {
-      font-size: 2rem;
-      font-weight: bold;
-      color: cyan;
-      text-align: center;
-      margin-bottom: 10px;
-      border-bottom: 2px dashed green;
-      padding-bottom: 5px;
-    }
-    .apps-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-      overflow-y: auto;
-      padding-bottom: 20px;
-    }
-    .app-box {
-      background-color: #111;
-      border: 2px solid cyan;
-      width: 150px;
-      height: 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px;
-      transition: transform 0.2s;
-      cursor: pointer;
-    }
-    .app-box:hover {
-      transform: scale(1.07);
-      border-color: orange;
-    }
-    .app-box img {
-      width: 100%;
-      height: 100px;
-      object-fit: cover;
-      border: 1px solid green;
-      margin-bottom: 5px;
-    }
-    .app-title {
-      color: orange;
-      font-weight: bold;
-      text-align: center;
-      font-size: 0.9rem;
-    }
+#splash {
+  display: flex;
+  animation: flicker 0.5s infinite alternate;
+}
+#splash h1 {
+  font-size: 4rem;
+  color: orange;
+  animation: zoomOut 3s forwards;
+  text-align: center;
+}
+@keyframes flicker {
+  0% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+@keyframes zoomOut {
+  from { font-size: 6rem; }
+  to { font-size: 2rem; }
+}
+
+#main {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.menu-button, .music-toggle {
+  background-color: transparent;
+  border: 2px solid orange;
+  color: orange;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+header {
+  font-size: 1.5rem;
+  color: cyan;
+  text-align: center;
+  flex: 1;
+}
+
+.divider {
+  width: 100%;
+  text-align: center;
+  color: green;
+  font-size: 1rem;
+  border-top: 2px dashed green;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.menu-options {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background: #111;
+  border: 2px solid green;
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+}
+
+.menu-options button {
+  padding: 10px;
+  background: black;
+  color: cyan;
+  border: none;
+  cursor: pointer;
+  border-bottom: 1px solid green;
+}
+
+.apps-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.app-box {
+  background-color: #111;
+  border: 2px solid cyan;
+  width: 150px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.app-box:hover {
+  transform: scale(1.07);
+  border-color: orange;
+}
+
+.app-box img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid green;
+  margin-bottom: 5px;
+}
+
+.app-title {
+  color: orange;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+textarea, input {
+  background: black;
+  border: 1px solid green;
+  color: lime;
+  padding: 10px;
+  margin: 10px;
+  width: 90%;
+  text-transform: none;
+}
+
+.button {
+  padding: 10px 20px;
+  background: orange;
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.center-text {
+  color: orange;
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 20px;
+}
+
+h2 {
+  color: orange;
+}
+
   </style>
 </head>
 <body>
-
-<!-- Splash Screen -->
 <div id="splash">
   <h1>WELCOME TO NIRANJAN CREATIONS</h1>
-</div>
-
-<!-- Main App Store -->
-<div id="main">
-  <header>ALL IN ONE STORE</header>
-  <div class="apps-container" id="appsContainer"></div>
-</div>
-
-<!-- Click Sound -->
-<audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio>
+</div><div id="main">
+  <div class="top-bar">
+    <button class="menu-button" onclick="toggleMenu(); playSound();">MENU</button>
+    <header>ALL IN ONE STORE</header>
+    <button class="music-toggle" onclick="toggleMusic(); playSound();" id="musicBtn">MUSIC: ON</button>
+  </div>
+  <div class="divider">------------------------------------------------------------</div>  <div class="menu-options" id="menuOptions">
+    <button onclick="showReportPage(); playSound();">REPORT TO NIRANJAN</button>
+    <button onclick="showUploadPage(); playSound();">UPLOAD YOUR APK</button>
+  </div>  <div class="apps-container" id="appsContainer"></div>
+</div><div id="reportPage">
+  <h2>REPORT TO NIRANJAN</h2>
+  <input id="userEmail" placeholder="enter your email" />
+  <textarea id="description" rows="6" placeholder="describe your issue..."></textarea>
+  <button class="button" onclick="sendEmail(); playSound();">SEND</button>
+</div><div id="uploadPage">
+  <div class="center-text">
+    UPLOAD YOUR APK IN YOUR GOOGLE DRIVE FIRST, THEN MAKE IT PUBLIC.<br>
+    COPY THE LINK AND SEND IT TO <strong>9515888385 (WHATSAPP)</strong><br>
+    INCLUDE THE APK TITLE AND APK IMAGE.
+  </div>
+  <button class="button" onclick="goBack(); playSound();">BACK</button>
+</div><audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio> <audio id="backgroundMusic" src="https://github.com/hacker1514/Store/raw/main/back_110812.mp3" autoplay loop></audio>
 
 <script>
-  // Splash Timeout
   setTimeout(() => {
     document.getElementById('splash').style.display = 'none';
     document.getElementById('main').style.display = 'flex';
-    loadApps(); // Load apps after splash
+    loadApps();
   }, 3000);
 
-  // App List Function
+  function playSound() {
+    const clickSound = document.getElementById('clickSound');
+    clickSound.currentTime = 0;
+    clickSound.play();
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('menuOptions');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function toggleMusic() {
+    const music = document.getElementById('backgroundMusic');
+    const btn = document.getElementById('musicBtn');
+    if (music.paused) {
+      music.play();
+      btn.textContent = 'MUSIC: ON';
+    } else {
+      music.pause();
+      btn.textContent = 'MUSIC: OFF';
+    }
+  }
+
+  function showReportPage() {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('reportPage').style.display = 'flex';
+  }
+
+  function showUploadPage() {
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('uploadPage').style.display = 'flex';
+  }
+
+  function goBack() {
+    document.getElementById('reportPage').style.display = 'none';
+    document.getElementById('uploadPage').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
+  }
+
+  function sendEmail() {
+    const email = document.getElementById('userEmail').value;
+    const description = document.getElementById('description').value;
+    const mailLink = `mailto:hackerenvironment1514@gmail.com?from=${encodeURIComponent(email)}&subject=REPORT FROM ${email}&body=${encodeURIComponent(description)}`;
+    window.location.href = mailLink;
+  }
+
   function getApps() {
     return [
       {
-        title: "Niranjan Music Player",
-        image: "https://via.placeholder.com/150x100.png?text=Music+Player",
-        link: "https://example.com/music"
-      },
-      {
-        title: "Niranjan Calculator",
-        image: "https://via.placeholder.com/150x100.png?text=Calculator",
-        link: "https://example.com/calc"
-      },
-      {
-        title: "Niranjan Chat App",
-        image: "https://via.placeholder.com/150x100.png?text=Chat+App",
-        link: "https://example.com/chat"
+        title: " C TO APK",
+        image: "https://github.com/hacker1514/Store/raw/main/c_to_apk.jpeg",
+        link: "https://drive.google.com/file/d/1-5J6o8uDPGLaPuO9p7mm-nuQvCkyqbIb/view?usp=drivesdk",
       }
-      // Add more here...
     ];
   }
 
-  // Create App Boxes with Click Sound
   function loadApps() {
     const apps = getApps();
     const container = document.getElementById('appsContainer');
-    const clickSound = document.getElementById('clickSound');
-
     apps.forEach(app => {
       const box = document.createElement('div');
       box.className = 'app-box';
-
       box.onclick = () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
+        playSound();
         window.open(app.link, '_blank');
       };
 
@@ -169,7 +288,5 @@
       container.appendChild(box);
     });
   }
-</script>
-
-</body>
+</script></body>
 </html>
