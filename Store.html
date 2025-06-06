@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Niranjan Creations</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    body {
+      background-color: #000;
+      color: cyan;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #splash {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: flicker 0.5s infinite alternate;
+      text-align: center;
+      flex-direction: column;
+    }
+    #splash h1 {
+      font-size: 3rem;
+      color: orange;
+      animation: zoomOut 3s forwards;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    @keyframes zoomOut {
+      from { font-size: 5rem; }
+      to { font-size: 2rem; }
+    }
+
+    #main {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      padding: 10px;
+      background: #000;
+      color: green;
+    }
+    header {
+      font-size: 2rem;
+      font-weight: bold;
+      color: cyan;
+      text-align: center;
+      margin-bottom: 10px;
+      border-bottom: 2px dashed green;
+      padding-bottom: 5px;
+    }
+    .apps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      overflow-y: auto;
+      padding-bottom: 20px;
+    }
+    .app-box {
+      background-color: #111;
+      border: 2px solid cyan;
+      width: 150px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .app-box:hover {
+      transform: scale(1.07);
+      border-color: orange;
+    }
+    .app-box img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border: 1px solid green;
+      margin-bottom: 5px;
+    }
+    .app-title {
+      color: orange;
+      font-weight: bold;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div id="splash">
+  <h1>WELCOME TO NIRANJAN CREATIONS</h1>
+</div>
+
+<!-- Main App Store -->
+<div id="main">
+  <header>ALL IN ONE STORE</header>
+  <div class="apps-container" id="appsContainer"></div>
+</div>
+
+<!-- Click Sound -->
+<audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio>
+
+<script>
+  // Splash Timeout
+  setTimeout(() => {
+    document.getElementById('splash').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
+    loadApps(); // Load apps after splash
+  }, 3000);
+
+  // App List Function
+  function getApps() {
+    return [
+      {
+        title: "Niranjan Music Player",
+        image: "https://via.placeholder.com/150x100.png?text=Music+Player",
+        link: "https://example.com/music"
+      },
+      {
+        title: "Niranjan Calculator",
+        image: "https://via.placeholder.com/150x100.png?text=Calculator",
+        link: "https://example.com/calc"
+      },
+      {
+        title: "Niranjan Chat App",
+        image: "https://via.placeholder.com/150x100.png?text=Chat+App",
+        link: "https://example.com/chat"
+      }
+      // Add more here...
+    ];
+  }
+
+  // Create App Boxes with Click Sound
+  function loadApps() {
+    const apps = getApps();
+    const container = document.getElementById('appsContainer');
+    const clickSound = document.getElementById('clickSound');
+
+    apps.forEach(app => {
+      const box = document.createElement('div');
+      box.className = 'app-box';
+
+      box.onclick = () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+        window.open(app.link, '_blank');
+      };
+
+      const img = document.createElement('img');
+      img.src = app.image;
+
+      const title = document.createElement('div');
+      title.className = 'app-title';
+      title.textContent = app.title;
+
+      box.appendChild(img);
+      box.appendChild(title);
+      container.appendChild(box);
+    });
+  }
+</script>
+
+</body>
+</html>
