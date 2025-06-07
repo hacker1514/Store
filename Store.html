@@ -13,13 +13,13 @@
       text-transform: uppercase;
     }
     body {
-      background-color: black;
+      background-color: blue;
       color: cyan;
       height: 100vh;
       overflow: hidden;
     }
 
-    #splash, #main, #reportPage, #uploadPage, #menuPage, #qrCodePage {
+    #splash, #main, #reportPage, #uploadPage, #menuPage, #qrCodePage, #notFoundPage {
       display: none;
       width: 100%;
       height: 100vh;
@@ -61,7 +61,7 @@
       top: 0;
       width: 100%;
       z-index: 999;
-      border-bottom: 2px solid green;
+      border-bottom: 2px solid red;
     }
 
     .menu-button, .music-toggle {
@@ -70,7 +70,7 @@
       color: orange;
       padding: 8px 16px;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
 
     header {
@@ -80,14 +80,35 @@
       flex: 1;
     }
 
-    .divider {
+    .search-bar-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: blue;
+      padding: 10px;
+      border-bottom: 2px solid red;
+      position: fixed;
+      top: 60px;
       width: 100%;
-      text-align: center;
-      color: green;
+      z-index: 998;
+    }
+
+    #searchInput {
+      width: 70%;
+      padding: 10px;
       font-size: 1.2rem;
-      border-top: 2px dashed green;
-      margin-top: 60px;
-      padding-top: 5px;
+      border: 2px solid green;
+      text-transform: none;
+    }
+
+    #searchBtn {
+      padding: 10px 20px;
+      background: transparent;
+      color: orange;
+      border: 2px solid orange;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
     }
 
     .apps-container {
@@ -97,14 +118,14 @@
       justify-content: center;
       overflow-y: auto;
       padding: 10px;
-      margin-top: 20px;
+      margin-top: 130px;
     }
 
     .app-box {
       background-color: #111;
       border: 2px solid cyan;
       width: 180px;
-      height: 240px;
+      height: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -129,17 +150,17 @@
       color: orange;
       font-weight: bold;
       text-align: center;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
     }
 
     textarea, input {
-      background: black;
+      background: white;
       border: 1px solid green;
-      color: lime;
+      color: black;
       padding: 12px;
       margin: 12px;
       width: 90%;
-      font-size: 1.1rem;
+      font-size: 1.5rem;
       text-transform: none;
     }
 
@@ -151,6 +172,12 @@
       border: none;
       font-size: 1.1rem;
       cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
     }
 
     .center-text {
@@ -165,98 +192,91 @@
       font-size: 2rem;
     }
 
-    #menuPage {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: #000;
-      z-index: 9999;
-    }
-
-    .menu-options {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .menu-options button {
-      padding: 15px 25px;
-      font-size: 1.3rem;
-      background: black;
-      color: cyan;
-      border: 2px solid green;
-      cursor: pointer;
-    }
-
-    /* QR Code Page Styling */
-    #qrCodePage {
+    #qrCodePage, #notFoundPage {
       position: fixed;
       top: 0;
       left: 0;
-      background: black;
+      background: blue;
       z-index: 10000;
+      flex-direction: column;
     }
 
     #qrCodePage img {
       width: 300px;
       height: 300px;
-      border: 2px solid orange;
+      border: 2px solid red;
       margin: 20px;
+    }
+
+    #notFoundPage h2 {
+      color: red;
     }
   </style>
 </head>
 <body>
+
 <div id="splash">
-  <h1>WELCOME TO NIRANJAN </br> CREATIONS</h1>
+  <h1>WELCOME TO NIRANJAN <br> CREATIONS</h1>
 </div>
 
 <div id="main">
   <div class="top-bar">
-    <button class="menu-button" onclick="openMenu(); playSound();">MENU</button>
+    <button class="menu-button" onclick="menu(); playSound();">MENU</button>
     <header>ALL IN ONE STORE</header>
     <button class="music-toggle" onclick="toggleMusic(); playSound();" id="musicBtn">MUSIC: ON</button>
   </div>
-  <div class="divider">==============================================================</div>
+
+  <div class="search-bar-container">
+    <input type="text" id="searchInput" placeholder="Search for an app...">
+    <button id="searchBtn" onclick="searchApp(); playSound();">SEARCH</button>
+  </div>
+
   <div class="apps-container" id="appsContainer"></div>
 </div>
 
-<!-- MENU -->
-<div id="menuPage">
+<!-- MENU PAGE -->
+<div id="menuPage" style="display:none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: blue; color: white;">
   <h2>MENU</h2>
-  <div class="menu-options">
-    <button onclick="showReportPage(); playSound();">REPORT TO NIRANJAN</button>
-    <button onclick="showUploadPage(); playSound();">UPLOAD YOUR APK</button>
-    <button class="button" onclick="closeMenu(); playSound();">BACK</button>
-  </div>
+  <button onclick="reportToNiranjan(); playSound();" class="button" style="width: 200px; margin: 10px;">REPORT TO NIRANJAN</button>
+  <button onclick="uploadYourAPK(); playSound();" class="button" style="width: 200px; margin: 10px;">UPLOAD YOUR APK</button>
+  <button onclick="goBackToMain(); playSound();" class="button" style="width: 200px; margin: 10px;">BACK</button>
 </div>
 
-<!-- REPORT -->
-<div id="reportPage">
+<!-- REPORT PAGE -->
+<div id="reportPage" style="display:none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: blue; color: orange;">
   <h2>REPORT TO NIRANJAN</h2>
   <input id="userEmail" placeholder="enter your email" />
   <textarea id="description" rows="6" placeholder="describe your issue..."></textarea>
-  <button class="button" onclick="sendEmail(); playSound();">SEND</button>
-</div>
-
-<!-- UPLOAD -->
-<div id="uploadPage">
-  <div class="center-text">
-    UPLOAD YOUR APK IN YOUR GOOGLE DRIVE FIRST, THEN MAKE IT PUBLIC.<br>
-    COPY THE LINK AND SEND IT TO <strong>9515888385 (WHATSAPP)</strong><br>
-    INCLUDE THE APK TITLE AND APK IMAGE.
+  <div class="button-group">
+    <button class="button" onclick="sendEmail(); playSound();">SEND</button>
+    <button class="button" onclick="goBackToMain(); playSound();">BACK</button>
   </div>
-  <button class="button" onclick="goBack(); playSound();">BACK</button>
 </div>
 
-<!-- QR Code Page -->
-<div id="qrCodePage">
+<!-- UPLOAD PAGE -->
+<div id="uploadPage" style="display:none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: blue; color: orange; text-align: center;">
+  <div style="font-size:1.5rem; padding: 20px;">
+    UPLOAD YOUR APK IN GOOGLE DRIVE,<br>
+    MAKE IT PUBLIC AND SEND TO <strong>9515888385 (WHATSAPP)</strong><br>
+    INCLUDE APK TITLE & IMAGE.
+  </div>
+  <button class="button" onclick="goBackToMain(); playSound();">BACK</button>
+</div>
+
+<!-- QR CODE -->
+<div id="qrCodePage" style="display:none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: blue; color: orange;">
   <h2>SCAN TO DOWNLOAD</h2>
   <img id="qrImage" src="" alt="QR Code" />
   <button class="button" onclick="closeQRCode(); playSound();">BACK</button>
 </div>
 
-<!-- Sounds -->
+<!-- NOT FOUND PAGE -->
+<div id="notFoundPage" style="display:none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: blue;">
+  <h2 style="color:red;">APP NOT FOUND</h2>
+  <button class="button" onclick="closeNotFound(); playSound();">BACK</button>
+</div>
+
+<!-- AUDIO -->
 <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio>
 <audio id="backgroundMusic" src="https://github.com/hacker1514/Store/raw/main/back_110812.mp3" autoplay loop></audio>
 
@@ -285,30 +305,27 @@
     }
   }
 
-  function openMenu() {
+  // === Original menu logic functions ===
+  function menu() {
     document.getElementById('main').style.display = 'none';
     document.getElementById('menuPage').style.display = 'flex';
   }
 
-  function closeMenu() {
+  function goBackToMain() {
     document.getElementById('menuPage').style.display = 'none';
+    document.getElementById('reportPage').style.display = 'none';
+    document.getElementById('uploadPage').style.display = 'none';
     document.getElementById('main').style.display = 'flex';
   }
 
-  function showReportPage() {
+  function reportToNiranjan() {
     document.getElementById('menuPage').style.display = 'none';
     document.getElementById('reportPage').style.display = 'flex';
   }
 
-  function showUploadPage() {
+  function uploadYourAPK() {
     document.getElementById('menuPage').style.display = 'none';
     document.getElementById('uploadPage').style.display = 'flex';
-  }
-
-  function goBack() {
-    document.getElementById('reportPage').style.display = 'none';
-    document.getElementById('uploadPage').style.display = 'none';
-    document.getElementById('main').style.display = 'flex';
   }
 
   function sendEmail() {
@@ -318,27 +335,30 @@
     window.location.href = mailLink;
   }
 
-  function getApps() {
-    return [
-      {
-        title: "C TO APK",
-        image: "https://raw.githubusercontent.com/hacker1514/Store/main/c_to_apk.jpeg",
-        link: "https://drive.google.com/uc?export=download&id=1-5J6o8uDPGLaPuO9p7mm-nuQvCkyqbIb"
-      },
-         {
-        title: "DIGITAL GRAPH",
-        image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-112857.png",               link: "https://drive.google.com/uc?export=download&id=19sV3N3fCaWNpOQVF_1cLb8VYevZzBSIJ"
-      },
-            {                                                                                                             title: "Niranjan store",
-           image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-113014.png",               link: "https://drive.google.com/uc?export=download&id=19x80PAw9mviTw5zLwPVV1-3n5oWW9zjd"
-      },
-      {                                                                                                             title: "RoyalStar-Music",                                                                                      image: "https://raw.githubusercontent.com/hacker1514/Store/main/Royal.jpg",
-           link: "https://drive.google.com/uc?export=download&id=1A32pzBejDPykLQN7_LvCW1qZ7gjrbpnS"                  },
-    ];
-  }
+  const apps = [
+    {
+      title: "C TO APK",
+      image: "https://raw.githubusercontent.com/hacker1514/Store/main/c_to_apk.jpeg",
+      link: "https://drive.google.com/uc?export=download&id=1-5J6o8uDPGLaPuO9p7mm-nuQvCkyqbIb"
+    },
+    {
+      title: "DIGITAL GRAPH",
+      image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-112857.png",
+      link: "https://drive.google.com/uc?export=download&id=19sV3N3fCaWNpOQVF_1cLb8VYevZzBSIJ"
+    },
+    {
+      title: "NIRANJAN STORE",
+      image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-113014.png",
+      link: "https://drive.google.com/uc?export=download&id=19x80PAw9mviTw5zLwPVV1-3n5oWW9zjd"
+    },
+    {
+      title: "ROYALSTAR-MUSIC",
+      image: "https://raw.githubusercontent.com/hacker1514/Store/main/Royal.jpg",
+      link: "https://drive.google.com/uc?export=download&id=1A32pzBejDPykLQN7_LvCW1qZ7gjrbpnS"
+    },
+  ];
 
   function loadApps() {
-    const apps = getApps();
     const container = document.getElementById('appsContainer');
     container.innerHTML = '';
     apps.forEach(app => {
@@ -348,24 +368,31 @@
         playSound();
         showQRCode(app.link);
       };
-
       const img = document.createElement('img');
       img.src = app.image;
-
       const title = document.createElement('div');
       title.className = 'app-title';
       title.textContent = app.title;
-
       box.appendChild(img);
       box.appendChild(title);
       container.appendChild(box);
     });
   }
 
+  function searchApp() {
+    const query = document.getElementById('searchInput').value.trim().toUpperCase();
+    const found = apps.find(app => app.title.toUpperCase() === query);
+    document.getElementById('main').style.display = 'none';
+    if (found) {
+      showQRCode(found.link);
+    } else {
+      document.getElementById('notFoundPage').style.display = 'flex';
+    }
+  }
+
   function showQRCode(link) {
     const qrImage = document.getElementById('qrImage');
     qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(link)}`;
-    document.getElementById('main').style.display = 'none';
     document.getElementById('qrCodePage').style.display = 'flex';
   }
 
@@ -373,6 +400,12 @@
     document.getElementById('qrCodePage').style.display = 'none';
     document.getElementById('main').style.display = 'flex';
   }
+
+  function closeNotFound() {
+    document.getElementById('notFoundPage').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
+  }
 </script>
+
 </body>
 </html>
