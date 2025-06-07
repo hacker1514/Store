@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="robots" content="index, follow">
   <title>NIRANJAN CREATIONS</title>
   <style>
     * {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
       font-family: 'Courier New', Courier, monospace;
       text-transform: uppercase;
@@ -17,7 +19,7 @@
       overflow: hidden;
     }
 
-    #splash, #main, #reportPage, #uploadPage, #menuPage {
+    #splash, #main, #reportPage, #uploadPage, #menuPage, #qrCodePage {
       display: none;
       width: 100%;
       height: 100vh;
@@ -47,11 +49,6 @@
     @keyframes zoomOut {
       from { font-size: 6rem; }
       to { font-size: 2.5rem; }
-    }
-
-    #main {
-      display: none;
-      flex-direction: column;
     }
 
     .top-bar {
@@ -168,7 +165,6 @@
       font-size: 2rem;
     }
 
-    /* Menu Page Full Screen */
     #menuPage {
       position: absolute;
       top: 0;
@@ -192,11 +188,27 @@
       border: 2px solid green;
       cursor: pointer;
     }
+
+    /* QR Code Page Styling */
+    #qrCodePage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: black;
+      z-index: 10000;
+    }
+
+    #qrCodePage img {
+      width: 300px;
+      height: 300px;
+      border: 2px solid orange;
+      margin: 20px;
+    }
   </style>
 </head>
 <body>
 <div id="splash">
-        <h1>WELCOME TO NIRANJAN </br> CREATIONS</h1>
+  <h1>WELCOME TO NIRANJAN </br> CREATIONS</h1>
 </div>
 
 <div id="main">
@@ -209,7 +221,7 @@
   <div class="apps-container" id="appsContainer"></div>
 </div>
 
-<!-- MENU FULL PAGE -->
+<!-- MENU -->
 <div id="menuPage">
   <h2>MENU</h2>
   <div class="menu-options">
@@ -219,7 +231,7 @@
   </div>
 </div>
 
-<!-- REPORT PAGE -->
+<!-- REPORT -->
 <div id="reportPage">
   <h2>REPORT TO NIRANJAN</h2>
   <input id="userEmail" placeholder="enter your email" />
@@ -227,7 +239,7 @@
   <button class="button" onclick="sendEmail(); playSound();">SEND</button>
 </div>
 
-<!-- UPLOAD PAGE -->
+<!-- UPLOAD -->
 <div id="uploadPage">
   <div class="center-text">
     UPLOAD YOUR APK IN YOUR GOOGLE DRIVE FIRST, THEN MAKE IT PUBLIC.<br>
@@ -237,6 +249,14 @@
   <button class="button" onclick="goBack(); playSound();">BACK</button>
 </div>
 
+<!-- QR Code Page -->
+<div id="qrCodePage">
+  <h2>SCAN TO DOWNLOAD</h2>
+  <img id="qrImage" src="" alt="QR Code" />
+  <button class="button" onclick="closeQRCode(); playSound();">BACK</button>
+</div>
+
+<!-- Sounds -->
 <audio id="clickSound" src="https://github.com/Niranjan164/COMPILER/raw/main/click-151673_073339.mp3" preload="auto"></audio>
 <audio id="backgroundMusic" src="https://github.com/hacker1514/Store/raw/main/back_110812.mp3" autoplay loop></audio>
 
@@ -302,21 +322,29 @@
     return [
       {
         title: "C TO APK",
-        image: "https://github.com/hacker1514/Store/raw/main/c_to_apk.jpeg",
-        link: "https://drive.google.com/uc?export=download&id=1-5J6o8uDPGLaPuO9p7mm-nuQvCkyqbIb", // direct download link
-      }
+        image: "https://raw.githubusercontent.com/hacker1514/Store/main/c_to_apk.jpeg",
+        link: "https://drive.google.com/uc?export=download&id=1-5J6o8uDPGLaPuO9p7mm-nuQvCkyqbIb"
+      },
+         {
+        title: "DIGITAL GRAPH",
+        image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-112857.png",               link: "https://drive.google.com/file/d/19sV3N3fCaWNpOQVF_1cLb8VYevZzBSIJ/view?usp=drivesdk"
+      },
+            {                                                                                                             title: "Niranjan store",
+           image: "https://raw.githubusercontent.com/hacker1514/Store/main/Screenshot_20250607-113014.png",               link: "https://drive.google.com/file/d/19x80PAw9mviTw5zLwPVV1-3n5oWW9zjd/view?usp=drivesdk"
+      },
     ];
   }
 
   function loadApps() {
     const apps = getApps();
     const container = document.getElementById('appsContainer');
+    container.innerHTML = '';
     apps.forEach(app => {
       const box = document.createElement('div');
       box.className = 'app-box';
       box.onclick = () => {
         playSound();
-        window.open(app.link, '_blank');
+        showQRCode(app.link);
       };
 
       const img = document.createElement('img');
@@ -330,6 +358,18 @@
       box.appendChild(title);
       container.appendChild(box);
     });
+  }
+
+  function showQRCode(link) {
+    const qrImage = document.getElementById('qrImage');
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(link)}`;
+    document.getElementById('main').style.display = 'none';
+    document.getElementById('qrCodePage').style.display = 'flex';
+  }
+
+  function closeQRCode() {
+    document.getElementById('qrCodePage').style.display = 'none';
+    document.getElementById('main').style.display = 'flex';
   }
 </script>
 </body>
